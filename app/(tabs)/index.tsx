@@ -1,46 +1,48 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, Button,View,Text  } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import AddTodo from '@/components/TodoListComponents/AddTodo';
 import TodoListItems from '@/components/TodoListComponents/TodoListItems';
 import { createContext, useContext, useState,useEffect } from 'react';
+import { ALERT_TYPE,AlertNotificationRoot,Toast } from 'react-native-alert-notification';
+import { NavigationContainer } from '@react-navigation/native';
+import { Stack } from 'expo-router';
 
-const todoListData1 = [
-  {
-  id: 1,
-  Todo: 'Learn React Native',
-},
-{
-  id: 2,
-  Todo: 'Learn React JS',
-}
 
-]
+
 export const todoListData = createContext();
 
 
 export default function HomeScreen() {
   const [todoLists,setTodoLists] = useState([])
   useEffect(() => {
-    console.log(todoLists)
-  
   }, [todoLists]);
 
   return (
+      
       <todoListData.Provider value={{setTodoLists, todoLists}} >
         <ParallaxScrollView
           headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
           headerImage={
+            <>
+            <Text style={styles.title}>Todo List 📋</Text>
             <Image
-            source={{
-              uri: 'https://animaker.com/hub/wp-content/uploads/2022/10/5S6813BUQO3A5PSQ-1.gif'
-            }}
+            source={require('@/assets/images/background.png')}
               style={styles.reactLogo}
             />
+            <View style={styles.AddTask}>
+                <AddTodo/>  
+            </View>
+            
+            </>
+            
           }>
-            <AddTodo/>
+          <View >
             <TodoListItems  data={todoLists} />
+          </View>
+  
         </ParallaxScrollView>
       </todoListData.Provider>
+
 
 
   );
@@ -59,8 +61,29 @@ const styles = StyleSheet.create({
   reactLogo: {
     height: '100%',
     width: '100%',
-    bottom: 0,
-    left: 0,
     position: 'absolute',
   },
+  AddTask: {
+      width: '95%',
+      paddingLeft: '5%',
+      marginTop: '45%',
+      height: 800,
+  },
+  title:{
+    marginTop: '22%',
+    marginLeft: '10%',
+    fontSize: 60,
+    fontWeight: 'bold',
+    color: '#D8AE7E',
+    position: 'absolute',
+    fontFamily: 'Roboto',
+    top: 10,
+    left: 10,
+    zIndex: 1000,
+  },
+
+
+  
+
+
 });
