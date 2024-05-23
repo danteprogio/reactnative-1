@@ -18,7 +18,7 @@ const AddTodo = () => {
             button: 'close',
           });
        }else{
-            setTodoLists([...todoLists, {id: uuid, title: task}]);
+            setTodoLists([...todoLists, {id: uuid.v4(), title: task,check: false,status:'Pending'}]);
            setTask('')
            Dialog.show({
             type: ALERT_TYPE.SUCCESS,

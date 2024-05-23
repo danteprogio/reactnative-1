@@ -1,11 +1,32 @@
 
-import { TextInput,StyleSheet,Button,View, ImageBackground,Text } from "react-native"
+import { useContext, useEffect, useRef } from "react";
+import { TextInput,StyleSheet,Button,View, ImageBackground,Text,Animated } from "react-native"
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-interface Input {
-    addTask: (task: string) => void;
-}
+import { todoListData } from "../Context/TodoContext";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 const TodoListItems = ({data}) => {
-   console.log(data);
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+    const {setTodoLists,todoLists} = useContext<any>(todoListData);
+   const  upDateTodoList = (checkValue,id,task) =>{
+    setTodoLists(
+        data.reverse().map((value) => {
+            if (value.id === id) {
+                value.check = checkValue
+                console.log(value)
+            }
+            return value;
+        })
+    )
+   }
+
+    const deleteTask = () =>{
+        console.log(1)
+    }
+
+    useEffect(() => {
+        console.log(todoLists)
+    }, [todoLists]);
+
     return (
         <>
         {
@@ -23,9 +44,17 @@ const TodoListItems = ({data}) => {
                                 iconStyle={{ borderColor: "#74512D" }}
                                 innerIconStyle={{ borderWidth: 3 }}
                                 textStyle={{ fontWeight: "bold" }}
-                                onPress={(isChecked: boolean) => {console.log(isChecked)}}
+                                isChecked={item.check}
+                                onPress={(isChecked: boolean) =>upDateTodoList(isChecked,item.id)}
                                 />
-                                 <Text>Pending..</Text>
+                            
+                                <View style={styles.icons}>
+                                    <Octicons name="pencil" size={24} color="black" />
+                                </View>
+
+                                <View style={styles.icons} >
+                                    <Ionicons name="trash-outline" size={24} color="red" onPress={deleteTask()} />
+                                </View>
                             </View>
                         </ImageBackground >
                     </View>
@@ -41,6 +70,27 @@ const TodoListItems = ({data}) => {
 }
 
 const styles = StyleSheet.create({
+    fadingContainer: {
+        padding: 20,
+        backgroundColor: 'powderblue',
+      },
+    icons:{
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        marginRight: 3,
+        marginHorizontal: 2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },      
+        
+    },
     container: {
         borderRadius: 5,
         alignItems: 'center',
@@ -58,6 +108,11 @@ const styles = StyleSheet.create({
     backGroundStyles:{
         borderRadius: 5,
         marginBottom: 6,
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 10,
+        backgroundColor: 'white',
+        shadowColor: "#000",
     }
   });
 
