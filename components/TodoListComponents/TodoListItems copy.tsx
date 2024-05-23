@@ -12,8 +12,10 @@ const TodoListItems = ({data}) => {
             if (value.id === id) {
                 if (value.check === true) {
                     value.check = false;
+                    value.status = 'Pending'
                 }else{
                     value.check = true;
+                    value.status = "Completed'"
                 }
                 console.log(value)
             }

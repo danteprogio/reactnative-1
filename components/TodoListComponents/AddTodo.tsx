@@ -1,13 +1,14 @@
-import { todoListData } from "@/components/Context/TodoContext";
+import { todoListData,SearchTaskCompleted } from "@/components/Context/TodoContext";
 import { AntDesign } from "@expo/vector-icons";
 import { useContext, useState } from "react";
-import { TextInput,StyleSheet,Button,View, Pressable } from "react-native"
+import { TextInput,StyleSheet,Button,View, Text } from "react-native"
 import { Alert } from "react-native";
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 import uuid from 'react-native-uuid';
 import "react-native-get-random-values";
-const AddTodo = () => {
+const AddTodo = ({data}) => {
     const {setTodoLists,todoLists} = useContext<any>(todoListData);
+    const {TaskSearch,setTaskSearch} = useContext<any>(SearchTaskCompleted);
     const [task,setTask] = useState<string>()
     const addTask = () => {
        if (task === undefined || task === "")  {
@@ -37,19 +38,42 @@ const AddTodo = () => {
           },
           {text: 'YES', onPress: () => addTask()},
         ]);
+
+    
     return (
         <AlertNotificationRoot>
             <View style={styles.fixToText}>
-                <TextInput
-                style={styles.input}
-                placeholder="Add Todo"
-                value={task}
-                onChangeText={(text)=>setTask(text)}
-                />
-                <View style={styles.buttonContainer} >
-                    <AntDesign name="plus" size={30} color="white" onPress={()=>createTwoButtonAlert()} /> 
 
-                </View>
+                    {
+                        data === 'Search' ? 
+                                <TextInput
+                                style={styles.input}
+                                placeholder="Search Task"
+                                value={task}
+                                onChangeText={(text)=> setTaskSearch(text)}
+                                 />
+                        :
+                                <TextInput
+                                style={styles.input}
+                                placeholder="Add Todo"
+                                value={task}
+                                onChangeText={(text)=>setTask(text)}
+                                />
+                            
+                    }
+
+
+                    {
+                        data === 'Search' ? 
+                            <AntDesign name="search1" size={30} color="#AF8F6F" onPress={()=>createTwoButtonAlert()} /> 
+                         
+                        :
+                        <View style={styles.buttonContainer} >
+                            <AntDesign name="plus" size={30} color="white" onPress={()=>createTwoButtonAlert()} /> 
+                        </View>    
+                    }
+
+                
             </View>
         </AlertNotificationRoot>
            

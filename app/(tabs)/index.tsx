@@ -1,88 +1,164 @@
-import { Image, StyleSheet, Platform, Button,View,Text  } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import AddTodo from '@/components/TodoListComponents/AddTodo';
-import TodoListItems from '@/components/TodoListComponents/TodoListItems';
-import { createContext, useContext, useState,useEffect } from 'react';
-import { ThemedView } from '@/components/ThemedView';
-import { todoListData } from '@/components/Context/TodoContext';
+import { todoListData } from '@/components/Context/TodoContext'
+import React, { useContext, useState } from 'react'
+import { View, Text, StyleSheet, FlatList, Image, ScrollView } from 'react-native'
 
-export default function HomeScreen() {
-  const [todoLists,setTodoLists] = useState([])
-  useEffect(() => {
-  }, [todoLists]);
+const stories = [
+  {
+    id: 1,
+    name: 'Jane',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar2.png',
+  },
+  {
+    id: 2,
+    name: 'John',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar3.png',
+  },
+  {
+    id: 3,
+    name: 'Katie',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar4.png',
+  },
+  {
+    id: 4,
+    name: 'Michael',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar5.png',
+  },
+  {
+    id: 5,
+    name: 'Sarah',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar6.png',
+  },
+  {
+    id: 6,
+    name: 'Sarah',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar1.png',
+  },
+  {
+    id: 7,
+    name: 'Sarah',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar2.png',
+  },
+  {
+    id: 8,
+    name: 'Sarah',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar3.png',
+  },
+  {
+    id: 9,
+    name: 'Sarah',
+    image: 'https://www.bootdey.com/img/Content/avatar/avatar4.png',
+  },
+]
+
+const StoryList = () => {
+  return (
+    <View style={styles.storyList}>
+      <Text style={styles.storyListText}>Stories</Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {stories.map(story => (
+          <View style={styles.storyContainer} key={story.id}>
+            <Image style={styles.storyImage} source={{ uri: story.image }} />
+            <Text style={styles.storyName}>{story.name}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  )
+}
+
+const Home = () => {
+  const {setTodoLists,todoLists} = useContext<any>(todoListData);
+
+  const renderItem1 = ({ item }) => {
+    return (
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <Image style={styles.avatar} source={{ uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png' }} />
+          <Text style={styles.sender}>Dante Progio</Text>
+        </View>
+        <View style={styles.cardBody}>
+          {
+            item.check ? 
+              <Image style={styles.cardImage} source={{ uri: 'https://previews.123rf.com/images/karolinamadej/karolinamadej1807/karolinamadej180700297/114831384-business-illustration-concept-with-cartoon-stickman-holding-board-with-text-task-completed-vector.jpg' }} />
+            :
+              <Image style={styles.cardImage} source={{ uri: 'https://media.istockphoto.com/id/1253437873/vector/yellow-warning-sign-work-in-progress-background.jpg?s=1024x1024&w=is&k=20&c=2uNjNxC_uLtawQ7zyOgI91VVCc3UEyeP7ylgeMFWGWA=' }} />
+            
+          }
+          <Text style={styles.cardText}>Task: {item.title}</Text>
+        </View>
+      </View>
+    )
+  }
 
   return (
-      
-      <todoListData.Provider value={{setTodoLists, todoLists}} >
-        <ParallaxScrollView
-          headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-          headerImage={
-            <>
-            <Text style={styles.title}>Todo List 📋</Text>
-            <Image
-            source={require('@/assets/images/background.png')}
-              style={styles.reactLogo}
-            />
-            <View style={styles.AddTask}>
-                <AddTodo/>  
-            </View>
-            
-            </>
-            
-          }>
-           <ThemedView style={styles.container}>
-            <TodoListItems  data={todoLists} />
-          </ThemedView>
-  
-        </ParallaxScrollView>
-      </todoListData.Provider>
-
-
-
-  );
+    <View style={styles.container}>
+      <StoryList />
+      <FlatList data={todoLists} renderItem={renderItem1} keyExtractor={item => item.id.toString()} />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-  container:{
-    marginTop: -20,
-    minWidth: 386,
-    marginLeft: -30
+  container: {
+    flex: 1,
+    marginTop: 40,
   },
-  titleContainer: {
+  storyList: {
+    marginTop: 20,
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  storyListText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  storyContainer: {
+    marginRight: 10,
+    alignItems: 'center',
+  },
+  storyImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginBottom: 5,
+  },
+  storyName: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    marginBottom: 10,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  card: {
+    padding: 20,
+    borderRadius: 10,
+    margin: 10,
+    backgroundColor:'white'
   },
-  reactLogo: {
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
   },
-  AddTask: {
-      width: '95%',
-      paddingLeft: '5%',
-      marginTop: '45%',
-      height: 800,
+  cardBody: {
+    flex: 1,
   },
-  title:{
-    marginTop: '22%',
-    marginLeft: '10%',
-    fontSize: 60,
+  sender: {
     fontWeight: 'bold',
-    color: '#D8AE7E',
-    position: 'absolute',
-    fontFamily: 'Roboto',
-    top: 10,
-    left: 10,
-    zIndex: 1000,
   },
+  cardImage: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  cardText: {
+    marginTop: 10,
+  },
+})
 
-
-  
-
-
-});
+export default Home
