@@ -1,12 +1,14 @@
-import { todoListData } from "@/app/(tabs)";
+import { todoListData } from "@/components/Context/TodoContext";
 import { AntDesign } from "@expo/vector-icons";
 import { useContext, useState } from "react";
 import { TextInput,StyleSheet,Button,View, Pressable } from "react-native"
 import { Alert } from "react-native";
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
+import uuid from 'react-native-uuid';
+import "react-native-get-random-values";
 const AddTodo = () => {
-    const {setTodoLists,todoLists} = useContext(todoListData);
-    const [task,setTask] = useState()
+    const {setTodoLists,todoLists} = useContext<any>(todoListData);
+    const [task,setTask] = useState<string>()
     const addTask = () => {
        if (task === undefined || task === "")  {
         Dialog.show({
@@ -16,7 +18,7 @@ const AddTodo = () => {
             button: 'close',
           });
        }else{
-            setTodoLists([...todoLists, {id: todoLists.length + 1, title: task}]);
+            setTodoLists([...todoLists, {id: uuid, title: task}]);
            setTask('')
            Dialog.show({
             type: ALERT_TYPE.SUCCESS,

@@ -3,14 +3,8 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import AddTodo from '@/components/TodoListComponents/AddTodo';
 import TodoListItems from '@/components/TodoListComponents/TodoListItems';
 import { createContext, useContext, useState,useEffect } from 'react';
-import { ALERT_TYPE,AlertNotificationRoot,Toast } from 'react-native-alert-notification';
-import { NavigationContainer } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-
-
-
-export const todoListData = createContext();
-
+import { ThemedView } from '@/components/ThemedView';
+import { todoListData } from '@/components/Context/TodoContext';
 
 export default function HomeScreen() {
   const [todoLists,setTodoLists] = useState([])
@@ -36,9 +30,9 @@ export default function HomeScreen() {
             </>
             
           }>
-          <View >
+           <ThemedView style={styles.container}>
             <TodoListItems  data={todoLists} />
-          </View>
+          </ThemedView>
   
         </ParallaxScrollView>
       </todoListData.Provider>
@@ -49,6 +43,11 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  container:{
+    marginTop: -20,
+    minWidth: 386,
+    marginLeft: -30
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
