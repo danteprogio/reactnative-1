@@ -37,9 +37,17 @@ const FlatListItem = ({data}) => {
         onPress={() =>upDateTodoList(todoID)}
         />
         <Text style={styles.statsCategory}>Task ID: {todoID}</Text>
-        <TouchableOpacity style={styles.statItem2}>
-            <Text style={styles.statValue}>{TodoStatus}</Text>
-        </TouchableOpacity>
+        {
+          TodoStatus === 'Completed'? (
+            <TouchableOpacity style={styles.statItem3}>
+                <Text style={styles.statValue}>{TodoStatus}</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={styles.statItem2}>
+                <Text style={styles.statValue}>{TodoStatus}</Text>
+            </TouchableOpacity>
+          )
+        }
         
         </View>
     );
@@ -100,7 +108,22 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    },
+    },statItem3: {
+      marginTop:20,
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginHorizontal: 10,
+      marginVertical: 5,
+      borderRadius: 5,
+      backgroundColor: '#40A578',
+      padding: 10,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      },
 });
 
 export default FlatListItem

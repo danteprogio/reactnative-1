@@ -1,7 +1,5 @@
 import { todoListData } from '@/components/Context/TodoContext';
 import FlatListItem from '@/components/Flatlist/FlatListItem';
-import TodoListItems from '@/components/TodoListComponents/TodoListItems';
-import { router } from 'expo-router';
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 
