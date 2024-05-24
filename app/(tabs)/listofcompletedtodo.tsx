@@ -1,125 +1,148 @@
-import { Image, StyleSheet, Platform, Button,View,Text  } from 'react-native';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import AddTodo from '@/components/TodoListComponents/AddTodo';
+import { todoListData } from '@/components/Context/TodoContext';
+import FlatListItem from '@/components/Flatlist/FlatListItem';
 import TodoListItems from '@/components/TodoListComponents/TodoListItems';
-import { createContext, useContext, useState,useEffect } from 'react';
-import { ThemedView } from '@/components/ThemedView';
-import { SearchTaskCompleted, todoListData } from '@/components/Context/TodoContext';
+import { router } from 'expo-router';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 
-export default function HomeScreen() {
-  const {setTodoLists,todoLists} = useContext<any>(todoListData);
-  const [TaskSearch,setTaskSearch] = useState<string>('')
+
+const CompletedTodo = () => {
+    const {setTodoLists,todoLists} = useContext<any>(todoListData);
+    const [showModal, setShowModal] = useState(false);
+    const [TaskSearch,setTaskSearch] = useState<string>('')
   
-  const filteredTodo = todoLists.filter((task) => {
-    return task.check;
-  });
+    const filteredTodo = todoLists.filter((task) => {
+      return task.check;
+    });
 
-    useEffect(() => {
+    const SearchTaskData= filteredTodo.filter((task) => {
+      return task.title.toLowerCase().includes(TaskSearch.toLowerCase());
+    });
+
     
-  }, []);
-  
-  const SearchTaskData= filteredTodo.filter((task) => {
-    return task.title.toLowerCase().includes(TaskSearch.toLowerCase());
-  });
-
-  
-
-
-
-
   return (
-          <SearchTaskCompleted.Provider value={{TaskSearch,setTaskSearch}} >
-            <ParallaxScrollView
-              headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-              headerImage={
-                <>
-                <Text style={styles.title}>List Of Completed</Text>
-                <Text style={styles.title1}>Todo</Text>
-                <Image
-                source={require('@/assets/images/background.png')}
-                  style={styles.reactLogo}
-                />
-                <View style={styles.AddTask}>
-                    <AddTodo data='Search'/>  
-                </View>
-                
-                </>
-                
-              }>
-              <ThemedView style={styles.container}>
-                {
-                  TaskSearch === '' ?
-                    <TodoListItems  data={filteredTodo} />
-                    :
-                    <TodoListItems  data={SearchTaskData} />
-                }
-                
-              </ThemedView>
-      
-            </ParallaxScrollView>
-          </SearchTaskCompleted.Provider>
-
-      
-
-
-
+    <View style={styles.container}>
+      <View style={styles.userCard}>
+        <View>
+          <Image source={{ uri: 'https://www.bootdey.com/img/Content/avatar/avatar1.png' }} style={styles.userPhoto} />
+        </View>
+        <View style={styles.userInfo}>
+          <Text style={styles.userName}> Dante Progio</Text>
+          <Text style={styles.info}>Software Developer / React JS Master</Text>
+        </View>
+        <TouchableOpacity style={styles.editButton}>
+          <Text style={styles.editButtonText}>More..</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.statsCard}>
+        <Text style={styles.statsTitle}>List Of Completed Task</Text>
+        <FlatListItem data={filteredTodo} />
+      </View>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container:{
-    marginTop: -20,
-    minWidth: 386,
-    marginLeft: -30
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop:60,
   },
-  titleContainer: {
+  userCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  userPhoto: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
-  reactLogo: {
-    height: '100%',
-    width: '100%',
+  userInfo: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  userName: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  info: {
+    color: '#999',
+  },
+  editButton: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#008B8B',
+  },
+  editButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  statsCard: {
+    marginHorizontal: 20,
+    marginVertical: 10,
+    padding: 20,
+    borderRadius: 10,
+    backgroundColor: '#f4f4f4',
+  },
+  statsTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  statItem: {
+    marginTop:20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  statValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  statsCategory: {
+    color: '#999',
+  },
+  addButton: {
     position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#6495ED',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  AddTask: {
-      width: '95%',
-      paddingLeft: '5%',
-      marginTop: '45%',
-      height: 800,
+  addButtonText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#fff',
   },
-  title:{
-    marginTop: '15%',
-    marginLeft: '8%',
-    fontSize: 45,
-    fontFamily: "Scripto2OR2v",
-    color: '#D8AE7E',
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    zIndex: 1000,
-    
-    
-  },
-  title1:{
-    marginTop: '24%',
-    marginLeft: '35%',
-    fontSize: 60,
-    color: '#D8AE7E',
-    position: 'absolute',
-    fontFamily: "Scripto2OR2v",
-    top: 10,
-    left: 10,
-    zIndex: 1000,
-   
-  },
-
-
-  
-
-
 });
+
+export default CompletedTodo

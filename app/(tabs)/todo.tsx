@@ -4,12 +4,16 @@ import TodoListItems from '@/components/TodoListComponents/TodoListItems';
 import { router } from 'expo-router';
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
-import { Modal } from 'react-native';
+
 
 const Todo = () => {
     const {setTodoLists,todoLists} = useContext<any>(todoListData);
     const [showModal, setShowModal] = useState(false);
-    
+    const filteredTodo = todoLists.filter((task) => {
+        return !task.check;
+      });
+
+      console.log(filteredTodo)
   return (
     <View style={styles.container}>
       <View style={styles.userCard}>
@@ -26,13 +30,7 @@ const Todo = () => {
       </View>
       <View style={styles.statsCard}>
         <Text style={styles.statsTitle}>Daily Task</Text>
-        {/* <FlatList
-          data={todoLists}
-          renderItem={({item}) => <RenderStatItem todoID={item.id} todoTitle={item.title} TodoStatus={item.status} />}
-          keyExtractor={(todoLists, index) => index.toString()}
-          numColumns={1}
-        /> */}
-        <FlatListItem data={todoLists} />
+        <FlatListItem data={filteredTodo} />
       </View>
       <TouchableOpacity style={styles.addButton} onPress={()=>router.push('/addTodoModal')}>
         <Text style={styles.addButtonText} >+</Text>

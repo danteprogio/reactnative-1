@@ -26,7 +26,6 @@ const FlatListItem = ({data}) => {
     const RenderStatItem = ({todoTitle,todoID,TodoStatus,TodoCheck}) => (
         <View style={styles.statItem} key={todoID}>
         <BouncyCheckbox
-        style={styles.input}
         size={27}
         fillColor="#74512D"
         unFillColor="#FFFFFF"
@@ -38,9 +37,9 @@ const FlatListItem = ({data}) => {
         onPress={() =>upDateTodoList(todoID)}
         />
         <Text style={styles.statsCategory}>Task ID: {todoID}</Text>
-        <View style={styles.statItem2}>
+        <TouchableOpacity style={styles.statItem2}>
             <Text style={styles.statValue}>{TodoStatus}</Text>
-        </View>
+        </TouchableOpacity>
         
         </View>
     );
@@ -48,9 +47,9 @@ const FlatListItem = ({data}) => {
     
   return (
         <FlatList
-          data={todoLists}
+          data={data}
           renderItem={({item}) => <RenderStatItem todoID={item.id} todoTitle={item.title} TodoStatus={item.status} TodoCheck={item.check}  />}
-          keyExtractor={(todoLists, index) => index.toString()}
+          keyExtractor={(data, index) => index.toString()}
           numColumns={1}
         />
       
@@ -81,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
+    color: 'white',
   },
   statsCategory: {
     color: '#999',
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 5,
     borderRadius: 5,
-    backgroundColor: '#fff',
+    backgroundColor: '#A34343',
     padding: 10,
     shadowColor: '#000',
     shadowOffset: {
