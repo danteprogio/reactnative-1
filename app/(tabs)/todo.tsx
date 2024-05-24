@@ -8,12 +8,10 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react
 
 const Todo = () => {
     const {setTodoLists,todoLists} = useContext<any>(todoListData);
-    const [showModal, setShowModal] = useState(false);
-    const filteredTodo = todoLists.filter((task) => {
-        return !task.check;
+    const filteredTodo = todoLists.filter((_data) => {
+      return _data.status = 'pending' 
       });
 
-      console.log(filteredTodo)
   return (
     <View style={styles.container}>
       <View style={styles.userCard}>

@@ -7,16 +7,14 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react
 const CompletedTodo = () => {
     const {setTodoLists,todoLists} = useContext<any>(todoListData);
     const [showModal, setShowModal] = useState(false);
-    const [TaskSearch,setTaskSearch] = useState<string>('')
-  
-    const filteredTodo = todoLists.filter((task) => {
-      return task.check;
+    const [TaskSearch,setTaskSearch] = useState<string>('complete')
+    
+    const filteredTodo = todoLists.filter((_data) => {
+       
+        return _data.task.toLowerCase().includes('s');
     });
 
-    const SearchTaskData= filteredTodo.filter((task) => {
-      return task.title.toLowerCase().includes(TaskSearch.toLowerCase());
-    });
-
+    
     
   return (
     <View style={styles.container}>

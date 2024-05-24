@@ -68,7 +68,6 @@ const StoryList = () => {
 
 const Home = () => {
   const {setTodoLists,todoLists} = useContext<any>(todoListData);
-
   const renderItem1 = ({ item }) => {
     return (
       <View style={styles.card}>
@@ -78,13 +77,13 @@ const Home = () => {
         </View>
         <View style={styles.cardBody}>
           {
-            item.check ? 
+            item.status === 'complete' ? 
               <Image style={styles.cardImage} source={{ uri: 'https://previews.123rf.com/images/karolinamadej/karolinamadej1807/karolinamadej180700297/114831384-business-illustration-concept-with-cartoon-stickman-holding-board-with-text-task-completed-vector.jpg' }} />
             :
               <Image style={styles.cardImage} source={{ uri: 'https://media.istockphoto.com/id/1253437873/vector/yellow-warning-sign-work-in-progress-background.jpg?s=1024x1024&w=is&k=20&c=2uNjNxC_uLtawQ7zyOgI91VVCc3UEyeP7ylgeMFWGWA=' }} />
             
           }
-          <Text style={styles.cardText}>Task: {item.title}</Text>
+          <Text style={styles.cardText}>Task: {item.task}</Text>
         </View>
       </View>
     )
