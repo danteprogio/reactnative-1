@@ -1,3 +1,4 @@
+import { FontAwesome6 } from '@expo/vector-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { useState } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -34,26 +35,40 @@ export default function App() {
       onBarcodeScanned={(scanningResult)=>{
         console.log(scanningResult.data);
       }}
-      
       facing={facing}>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
         </View>
       </CameraView>
+        <View style={styles.container1}>
+          <TouchableOpacity style={styles.button1} onPress={toggleCameraFacing}>
+                <FontAwesome6 name="camera-rotate" size={50} color="black" />
+            </TouchableOpacity>
+        </View>
     </View>
     
   );
 }
 
 const styles = StyleSheet.create({
+  container1:{
+    backgroundColor: 'white',
+    minHeight: 150,
+  },
+  button1:{
+    marginTop: 30,
+    marginLeft: '40%',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
   },
   camera: {
-    flex: 1,
+    marginTop: -75,
+    width: '100%',
+    height: '90%',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   buttonContainer: {
     flex: 1,

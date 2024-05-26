@@ -33,7 +33,7 @@ const FlatListItem = ({data}) => {
         iconStyle={{ borderColor: "#74512D" }}
         innerIconStyle={{ borderWidth: 3 }}
         textStyle={{ fontWeight: "bold", fontSize:20}}
-        isChecked={TodoStatus === "complete" ? true : false}
+        isChecked={TodoCheck}
         onPress={() =>upDateTodoList(todoID)}
         />
         <Text style={styles.statsCategory}>Task ID: {todoID}</Text>
@@ -56,7 +56,7 @@ const FlatListItem = ({data}) => {
   return (
         <FlatList
           data={data}
-          renderItem={({item}) => <RenderStatItem todoID={item.id} todoTitle={item.task} TodoStatus={item.status}   />}
+          renderItem={({item}) => <RenderStatItem todoID={item.id} todoTitle={item.title} TodoStatus={item.status} TodoCheck={item.check}  />}
           keyExtractor={(data, index) => index.toString()}
           numColumns={1}
         />

@@ -44,6 +44,15 @@ export default function RootLayout() {
               title: 'Add Task',
             }}
           />
+
+          <Stack.Screen
+            name="camera"
+            options={{
+              // Set the presentation mode to modal for our modal route.
+              presentation: 'modal',
+              title: 'Scanner',
+            }}
+          />
           </Stack>
         </ThemeProvider>
       </todoListData.Provider>

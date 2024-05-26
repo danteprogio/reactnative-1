@@ -8,6 +8,7 @@ import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-a
 import uuid from 'react-native-uuid';
 import "react-native-get-random-values";
 import { todoListData,SearchTaskCompleted } from '@/components/Context/TodoContext';
+import { Fontisto } from '@expo/vector-icons';
 
 
 export default function Modal() {
@@ -85,9 +86,11 @@ export default function Modal() {
               value={task}
               onChangeText={(text)=>setTask(text)}
             />
-          
-           
           </View>
+          <TouchableOpacity style={styles.cameraIcon} onPress={()=>router.push('/camera')} >
+              <Fontisto name="camera" size={24} color="black" />
+          </TouchableOpacity>
+
         </View>
     </AlertNotificationRoot>
   );
@@ -195,4 +198,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
   },
+  cameraIcon:{
+    alignItems: 'center',
+    marginLeft: '74%'
+   
+  }
 });
